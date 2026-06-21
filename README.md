@@ -151,11 +151,11 @@ openspec/
 
 | 阶段 | 功能 | 技术点 | 进度 |
 |------|------|--------|------|
-| **P0** 基础 | 个人主页展示、个人信息编辑、社交链接 | 静态页面 → 响应式布局 → API 对接 | ✅ 已完成 |
-| **P1** 动态 | 博客/动态列表、分类筛选、搜索、分页 | RESTful API → 数据库 CRUD → TanStack Query 缓存 | ✅ 已完成 |
-| **P2** 用户 | 注册/登录、个人中心、权限控制、评论互动 | JWT 认证 → bcrypt 加密 → Guard 守卫 → 关联查询 | ✅ 已完成 |
-| **P3** 进阶 | 文件上传、点赞收藏、消息通知、数据统计 | Multer 上传 → WebSocket 实时通知 → 事务操作 | ⬜ 待开始 |
-| **P4** 高阶 | 数据看板、深色/浅色主题切换、i18n 国际化 | ECharts 图表 → Zustand 持久化 → i18next 多语言 | ⬜ 待开始 |
+| **P0** 基础 | 个人主页、Hero 区、统计面板、搜索 | 静态页面 → 响应式布局 → API 对接 | ✅ 已完成 |
+| **P1** 浏览 | 文章列表、分类筛选、搜索、分页、文章详情 | RESTful API → TanStack Query 缓存 → React Router | ✅ 已完成 |
+| **P2** 用户 | 注册/登录、个人中心、Token 管理、路由守卫 | JWT 认证 → Zustand persist → PrivateRoute | ✅ 已完成 |
+| **P3** 创作 | 发文编辑器、文章管理、评论、点赞、标签云 | Markdown 编辑 → 关联查询 → 乐观更新 | ⬜ 待开始 |
+| **P4** 进阶 | 头像/封面上传、消息通知、数据看板、国际化 | Multer 上传 → WebSocket → ECharts → i18n | ⬜ 待开始 |
 
 ### 最近更新 (2026-06-21)
 
@@ -191,3 +191,4 @@ openspec/
 - 本地开发切换 SQLite，零依赖启动
 - OpenSpec 6 步工作流就绪（propose → explore → apply → verify → archive）
 - GitHub Pages 自动部署
+- 深色/浅色主题切换（Tailwind darkMode + Zustand + ThemeProvider）
