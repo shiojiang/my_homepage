@@ -190,5 +190,6 @@ openspec/
 **基础设施**
 - 本地开发切换 SQLite，零依赖启动
 - OpenSpec 6 步工作流就绪（propose → explore → apply → verify → archive）
-- GitHub Pages 自动部署
 - 深色/浅色主题切换（Tailwind darkMode + Zustand + ThemeProvider）
+
+> **待做**：当前仅前端部署 GitHub Pages，线上 API 请求返回 404（静态托管不支持后端）。项目开发完成后，将后端部署到 Render/Railway 等平台，前端再对接线上 API。
