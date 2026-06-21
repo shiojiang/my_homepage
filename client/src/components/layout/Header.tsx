@@ -1,27 +1,20 @@
 import { motion } from 'framer-motion'
-import { Search, Bell, Sun, Moon } from 'lucide-react'
+import { Bell, Sun, Moon } from 'lucide-react'
 import { useThemeStore } from '@/stores/themeStore'
-import { cn } from '@/lib/utils'
+import { useSearchStore } from '@/stores/searchStore'
+import SearchBar from '@/components/common/SearchBar'
 
 export default function Header() {
   const { theme, toggleTheme } = useThemeStore()
+  const { keyword, setKeyword } = useSearchStore()
 
   return (
     <header className="h-16 border-b border-border bg-card/50 backdrop-blur-sm flex items-center justify-between px-6">
       {/* Search Bar */}
-      <div className="flex-1 max-w-md">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="搜索内容..."
-            className="w-full pl-10 pr-4 py-2 rounded-full bg-muted text-sm border border-transparent focus:border-primary/50 focus:bg-background transition-all duration-200 outline-none"
-          />
-        </div>
-      </div>
+      <SearchBar value={keyword} onChange={setKeyword} />
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 ml-4">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

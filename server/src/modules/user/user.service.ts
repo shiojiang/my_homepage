@@ -46,4 +46,30 @@ export class UserService {
       },
     })
   }
+
+  async getStats(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        _count: {
+          select: { posts: true, comments: true },
+        },
+      },
+    })
+    if (!user) throw new NotFoundException('用户不存在')
+
+    // 收集所有标签去重
+    const posts = await this.prisma.post.findMany({
+      where: { authorId: id, published: true },
+      select: { tags: true },
+    })
+    const uniqueTags = new Set(posts.flatMap((p) => p.tags))
+
+    return {
+      posts: user._count.posts,
+      comments: user._count.comments,
+      tags: uniqueTags.size,
+      links: 0,
+    }
+  }
 }
