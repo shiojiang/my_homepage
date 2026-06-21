@@ -86,6 +86,65 @@ my-homepage/
 └── docker-compose.yml     # 容器编排
 ```
 
+## 📋 OpenSpec 编码规范
+
+本项目使用 OpenSpec 驱动开发，所有功能迭代必须遵循以下工作流。
+
+### 工作流概览
+
+```
+explore → propose → apply → verify → archive
+  (可选)   (必须)    (必须)   (推荐)    (必须)
+```
+
+### 完整步骤
+
+| 步骤 | 命令 | 必要性 | 职责 | 产出物 |
+|------|------|--------|------|--------|
+| ① 探索 | `/opsx:explore` | 可选 | 思考讨论、调查问题、对比技术方案 | 无文件 |
+| ② 提案 | `/opsx:propose` | **必须** | 创建变更目录，编写提案与任务拆解 | `proposal.md` / `design.md` / `tasks.md` |
+| ③ 实施 | `/opsx:apply` | **必须** | 按 tasks.md 逐项编码实现，标记完成状态 | 代码变更 |
+| ④ 验证 | `/opsx:verify` | 推荐 | 编译检查、类型检查、Spec 验收 | `verify.md` |
+| ⑤ 同步 | `/opsx:sync` | 可选 | 将 delta spec 合并到主 spec | 主 spec 更新 |
+| ⑥ 归档 | `/opsx:archive` | **必须** | 变更移入 `archive/`，完成闭环 | 归档目录 |
+
+### 最小可行流程
+
+最简开发闭环仅需 **3 步**：
+
+```bash
+/opsx:propose  →  /opsx:apply  →  /opsx:archive
+```
+
+- **propose**：描述需求，AI 自动生成 `proposal.md`（做什么）、`design.md`（怎么做）、`tasks.md`（实现步骤）
+- **apply**：AI 按任务列表逐项编码，完成后自动勾选 `[x]`
+- **archive**：变更归档至 `openspec/changes/archive/YYYY-MM-DD-<name>/`，可选同步 spec
+
+### 编码原则
+
+1. **先提案再编码**：所有功能开发、Bug 修复、重构均需先创建 OpenSpec 变更
+2. **任务驱动**：编码严格按 `tasks.md` 顺序执行，不跳步、不偏离
+3. **最小化变更**：每次仅聚焦当前任务，避免引入无关改动
+4. **完成后归档**：验证通过后及时归档，保持 `openspec/changes/` 干净
+5. **复杂需求先探索**：技术方案不明确时用 `/opsx:explore` 充分讨论再提案
+
+### 目录结构
+
+```
+openspec/
+├── specs/                  # 主 spec（功能规格说明）
+└── changes/                # 活跃变更
+    ├── add-user-auth/      # 变更目录
+    │   ├── proposal.md
+    │   ├── design.md
+    │   ├── tasks.md
+    │   └── verify.md
+    └── archive/            # 已归档变更
+        └── 2026-06-21-add-user-auth/
+```
+
+---
+
 ## 🎯 复杂度递进路线
 
 | 阶段 | 功能 | 技术点 |
