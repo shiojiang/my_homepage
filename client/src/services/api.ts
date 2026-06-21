@@ -21,10 +21,16 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    if (error.response?.status === 401) {
+    const isAuthEndpoint = error.config?.url?.startsWith('/auth/')
+
+    // 401 且非认证接口（登录/注册）才清除登录态
+    if (error.response?.status === 401 && !isAuthEndpoint) {
       localStorage.removeItem('token')
+      // 清除 Zustand 持久化数据
+      localStorage.removeItem('auth-storage')
       window.location.href = '/login'
     }
+
     return Promise.reject(error)
   },
 )
