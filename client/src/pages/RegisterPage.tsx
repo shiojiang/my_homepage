@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { User, Mail, Lock, UserPlus } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { User, Mail, Lock, UserPlus, CheckCircle2 } from 'lucide-react'
 import api from '@/services/api'
 import { useAuthStore } from '@/stores/authStore'
 
@@ -12,17 +12,20 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccess(false)
     setLoading(true)
 
     try {
       const res = await api.post('/auth/register', { username, email, password }) as any
       login(res.accessToken, res.user)
-      navigate('/')
+      setSuccess(true)
+      setTimeout(() => navigate('/'), 2000)
     } catch (err: any) {
       setError(err?.response?.data?.message || err?.message || '注册失败')
     } finally {
@@ -32,6 +35,30 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
+      {/* 成功提示浮层 */}
+      <AnimatePresence>
+        {success && (
+          <motion.div
+            initial={{ opacity: 0, y: -60 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -60 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-card border border-primary/30 shadow-lg rounded-xl px-6 py-4"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+            >
+              <CheckCircle2 className="w-7 h-7 text-green-500" />
+            </motion.div>
+            <div>
+              <p className="font-semibold text-base">注册成功！</p>
+              <p className="text-sm text-muted-foreground">欢迎加入，即将跳转首页...</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
