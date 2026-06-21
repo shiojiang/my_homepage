@@ -17,6 +17,12 @@ import { UpdateUserDto } from './dto/user.dto'
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('me')
+  @ApiOperation({ summary: '获取当前默认用户信息（开发阶段用首个用户）' })
+  getMe() {
+    return this.userService.getFirstUser()
+  }
+
   @Get(':id/stats')
   @ApiOperation({ summary: '获取用户统计信息' })
   getStats(@Param('id') id: string) {

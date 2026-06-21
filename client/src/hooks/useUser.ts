@@ -16,10 +16,10 @@ interface User {
   }
 }
 
-export function useUser(userId: string) {
+// 获取当前用户（开发阶段返回首个用户）
+export function useUser() {
   return useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => api.get(`/users/${userId}`) as Promise<User>,
-    enabled: !!userId,
+    queryKey: ['user', 'me'],
+    queryFn: () => api.get('/users/me') as Promise<User>,
   })
 }

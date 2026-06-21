@@ -4,9 +4,6 @@ import StatsDashboard from '@/components/home/StatsDashboard'
 import PostList from '@/components/home/PostList'
 import { useUser } from '@/hooks/useUser'
 
-// 默认用户 ID（后续 P2 阶段改为当前登录用户）
-const DEFAULT_USER_ID = '00000000-0000-0000-0000-000000000001'
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -16,7 +13,7 @@ const containerVariants = {
 }
 
 export default function HomePage() {
-  const { data: user, isLoading: userLoading } = useUser(DEFAULT_USER_ID)
+  const { data: user, isLoading: userLoading } = useUser()
 
   return (
     <motion.div

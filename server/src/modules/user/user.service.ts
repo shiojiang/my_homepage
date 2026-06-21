@@ -6,6 +6,26 @@ import { UpdateUserDto } from './dto/user.dto'
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  async getFirstUser() {
+    const user = await this.prisma.user.findFirst({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        avatar: true,
+        bio: true,
+        location: true,
+        website: true,
+        createdAt: true,
+        _count: {
+          select: { posts: true, comments: true },
+        },
+      },
+    })
+    if (!user) throw new NotFoundException('暂无用户')
+    return user
+  }
+
   async findByEmail(email: string) {
     return this.prisma.user.findUnique({ where: { email } })
   }
@@ -63,7 +83,7 @@ export class UserService {
       where: { authorId: id, published: true },
       select: { tags: true },
     })
-    const uniqueTags = new Set(posts.flatMap((p) => p.tags))
+    const uniqueTags = new Set(posts.flatMap((p) => JSON.parse(p.tags || '[]')))
 
     return {
       posts: user._count.posts,

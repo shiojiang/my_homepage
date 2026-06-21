@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -31,12 +31,12 @@ model User {
 model Post {
   id        String   @id @default(uuid())
   title     String
-  content   String   @db.Text
+  content   String
   summary   String?
   cover     String?
   published Boolean  @default(false)
   category  String   @default("general")
-  tags      String[] @default([])
+  tags      String   @default("[]")
   viewCount Int      @default(0) @map("view_count")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -53,7 +53,7 @@ model Post {
 // 评论表
 model Comment {
   id        String   @id @default(uuid())
-  content   String   @db.Text
+  content   String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

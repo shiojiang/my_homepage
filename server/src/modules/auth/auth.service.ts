@@ -4,8 +4,8 @@ import {
   ConflictException,
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
 import { PrismaService } from '../../prisma/prisma.service'
+import { hashPassword, verifyPassword } from '../../common/crypto'
 import { RegisterDto, LoginDto } from './dto/auth.dto'
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AuthService {
       throw new ConflictException('用户名或邮箱已存在')
     }
 
-    const hashedPassword = await bcrypt.hash(dto.password, 10)
+    const hashedPassword = hashPassword(dto.password)
     const user = await this.prisma.user.create({
       data: {
         username: dto.username,
@@ -45,8 +45,7 @@ export class AuthService {
       throw new UnauthorizedException('邮箱或密码错误')
     }
 
-    const isValid = await bcrypt.compare(dto.password, user.password)
-    if (!isValid) {
+    if (!verifyPassword(dto.password, user.password)) {
       throw new UnauthorizedException('邮箱或密码错误')
     }
 

@@ -68,8 +68,8 @@ description: >
 如果 README 中还没有「进度」列和「最近更新」区块，则新增。
 
 ### 4. 提交代码
-- 每次功能点完成后，用 `git add . && git commit -m "feat: <简短描述>" && git push` 提交
-- 提交信息区分前缀：`feat:` 新功能 / `fix:` 修复 / `docs:` 文档 / `style:` 样式
+- **不要自动提交**：功能实现完成后，先报告变更摘要让用户审核，用户确认后再执行 `git add . && git commit -m "..." && git push`
+- 提交信息区分前缀：`feat:` 新功能 / `fix:` 修复 / `docs:` 文档 / `style:` 样式 / `refactor:` 重构
 
 ### 5. 完成确认
 - 前端变更：确认 `npx tsc --noEmit` 和 `npx vite build` 通过

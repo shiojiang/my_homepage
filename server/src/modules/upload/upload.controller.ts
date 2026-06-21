@@ -10,7 +10,6 @@ import { ApiTags, ApiOperation, ApiBearerAuth, ApiConsumes } from '@nestjs/swagg
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { diskStorage } from 'multer'
 import { extname, join } from 'path'
-import { v4 as uuidv4 } from 'uuid'
 
 // 简易 uuid 实现，避免额外依赖
 function simpleUuid(): string {

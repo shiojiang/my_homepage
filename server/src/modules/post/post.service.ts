@@ -2,13 +2,31 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
 import { CreatePostDto, UpdatePostDto, QueryPostDto } from './dto/post.dto'
 
+// SQLite 兼容：tags 存为 JSON 字符串，读取时解析为数组
+function parseTags(data: any) {
+  if (!data) return data
+  if (Array.isArray(data)) return data
+  const items = Array.isArray(data.items) ? data.items : data
+  if (!Array.isArray(items)) return items
+  return {
+    ...data,
+    items: items.map((item: any) =>
+      item && typeof item.tags === 'string'
+        ? { ...item, tags: JSON.parse(item.tags) }
+        : item,
+    ),
+  }
+}
+
 @Injectable()
 export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async create(authorId: string, dto: CreatePostDto) {
+    const data: any = { ...dto, authorId }
+    if (Array.isArray(data.tags)) data.tags = JSON.stringify(data.tags)
     return this.prisma.post.create({
-      data: { ...dto, authorId },
+      data,
       include: {
         author: {
           select: { id: true, username: true, avatar: true },
@@ -48,7 +66,15 @@ export class PostService {
       this.prisma.post.count({ where }),
     ])
 
-    return { items, total, page, pageSize }
+    return {
+      items: items.map((item) => ({
+        ...item,
+        tags: JSON.parse(item.tags || '[]'),
+      })),
+      total,
+      page,
+      pageSize,
+    }
   }
 
   async findOne(id: string) {
@@ -65,7 +91,10 @@ export class PostService {
       },
     })
     if (!post) throw new NotFoundException('文章不存在')
-    return post
+    return {
+      ...post,
+      tags: JSON.parse(post.tags || '[]'),
+    }
   }
 
   async update(id: string, authorId: string, dto: UpdatePostDto) {
@@ -74,9 +103,12 @@ export class PostService {
     })
     if (!post) throw new NotFoundException('文章不存在')
 
+    const data: any = { ...dto }
+    if (Array.isArray(data.tags)) data.tags = JSON.stringify(data.tags)
+
     return this.prisma.post.update({
       where: { id },
-      data: dto,
+      data,
     })
   }
 

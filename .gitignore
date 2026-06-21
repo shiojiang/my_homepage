@@ -27,6 +27,8 @@ npm-debug.log*
 
 # Prisma
 server/prisma/migrations/
+*.db
+*.db-journal
 
 # Uploads
 uploads/
