@@ -149,12 +149,37 @@ openspec/
 
 ## 🎯 复杂度递进路线
 
-| 阶段 | 功能 | 技术点 |
-|------|------|--------|
-| **P0** 基础 | 个人主页展示、个人信息编辑、社交链接 | 静态页面 → 响应式布局 → API 对接 |
-| **P1** 动态 | 博客/动态列表、分类筛选、搜索、分页 | RESTful API → 数据库 CRUD → TanStack Query 缓存 |
-| **P2** 用户 | 注册/登录、个人中心、权限控制、评论互动 | JWT 认证 → bcrypt 加密 → Guard 守卫 → 关联查询 |
-| **P3** 进阶 | 文件上传、点赞收藏、消息通知、数据统计 | Multer 上传 → WebSocket 实时通知 → 事务操作 |
-| **P4** 高阶 | 数据看板、深色/浅色主题切换、i18n 国际化 | ECharts 图表 → Zustand 持久化 → i18next 多语言 |
+| 阶段 | 功能 | 技术点 | 进度 |
+|------|------|--------|------|
+| **P0** 基础 | 个人主页展示、个人信息编辑、社交链接 | 静态页面 → 响应式布局 → API 对接 | ✅ 已完成 |
+| **P1** 动态 | 博客/动态列表、分类筛选、搜索、分页 | RESTful API → 数据库 CRUD → TanStack Query 缓存 | ✅ 已完成 |
+| **P2** 用户 | 注册/登录、个人中心、权限控制、评论互动 | JWT 认证 → bcrypt 加密 → Guard 守卫 → 关联查询 | ⬜ 待开始 |
+| **P3** 进阶 | 文件上传、点赞收藏、消息通知、数据统计 | Multer 上传 → WebSocket 实时通知 → 事务操作 | ⬜ 待开始 |
+| **P4** 高阶 | 数据看板、深色/浅色主题切换、i18n 国际化 | ECharts 图表 → Zustand 持久化 → i18next 多语言 | ⬜ 待开始 |
 
-> 当前进度：脚手架搭建完成，后端 4 个核心模块 API 就绪，前端框架就绪。
+### 最近更新 (2026-06-21)
+
+**P1 动态列表与详情**
+- 新增 CategoryFilter 分类标签切换（全部/技术/生活/综合）
+- 新增 Pagination 分页控件（上一页/下一页）
+- 新增 PostDetailPage `/posts/:id` 文章详情页
+- PostCard 支持点击跳转到详情页
+- App.tsx 新增 `/posts/:id` 路由
+
+**P0 基础展示**
+- HomePage：拆分为 HeroSection / StatsDashboard / PostList / PostCard 组件
+- 新增 SearchBar / EmptyState / SkeletonCard 通用组件
+- 新增 useUser / usePosts hooks，对接 TanStack Query
+- 新增 searchStore (Zustand)，实现搜索实时联动
+- 支持加载骨架屏、空态、错误状态
+
+**后端**
+- 新增 `GET /api/users/me` 用户信息接口
+- 新增 `GET /api/users/:id/stats` 统计接口
+- bcrypt 替换为 Node crypto（Windows SQLite 兼容）
+- Post tags 适配 SQLite JSON 存储
+
+**基础设施**
+- 本地开发切换 SQLite，零依赖启动
+- OpenSpec 6 步工作流就绪（propose → explore → apply → verify → archive）
+- GitHub Pages 自动部署
