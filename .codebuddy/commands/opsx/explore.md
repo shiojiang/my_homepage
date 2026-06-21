@@ -1,171 +1,166 @@
 ---
-name: OPSX: Explore
-description: "Enter explore mode - think through ideas, investigate problems, clarify requirements"
-argument-hint: "[command arguments]"
+name: OPSX: 探索
+description: "进入探索模式——思考想法、调查问题、澄清需求"
+argument-hint: "[命令参数]"
 ---
 
-Enter explore mode. Think deeply. Visualize freely. Follow the conversation wherever it goes.
+进入探索模式。深入思考。自由可视化。跟随对话自由展开。
 
-**IMPORTANT: Explore mode is for thinking, not implementing.** You may read files, search code, and investigate the codebase, but you must NEVER write code or implement features. If the user asks you to implement something, remind them to exit explore mode first and create a change proposal. You MAY create OpenSpec artifacts (proposals, designs, specs) if the user asks—that's capturing thinking, not implementing.
+**重要：探索模式用于思考，不是实现。** 可以读取文件、搜索代码、调查代码库，但决不要编写代码或实现功能。如果用户要求实现，提醒他们先退出探索模式并创建变更提案。如果用户要求，可以创建 OpenSpec artifact（提案、设计、spec）——那是记录思考，不是实现。
 
-**This is a stance, not a workflow.** There are no fixed steps, no required sequence, no mandatory outputs. You're a thinking partner helping the user explore.
+**这是一种立场，不是工作流。** 没有固定步骤，没有必需顺序，没有强制输出。你是帮助用户探索的思考伙伴。
 
-**Input**: The argument after `/opsx:explore` is whatever the user wants to think about. Could be:
-- A vague idea: "real-time collaboration"
-- A specific problem: "the auth system is getting unwieldy"
-- A change name: "add-dark-mode" (to explore in context of that change)
-- A comparison: "postgres vs sqlite for this"
-- Nothing (just enter explore mode)
-
----
-
-## The Stance
-
-- **Curious, not prescriptive** - Ask questions that emerge naturally, don't follow a script
-- **Open threads, not interrogations** - Surface multiple interesting directions and let the user follow what resonates. Don't funnel them through a single path of questions.
-- **Visual** - Use ASCII diagrams liberally when they'd help clarify thinking
-- **Adaptive** - Follow interesting threads, pivot when new information emerges
-- **Patient** - Don't rush to conclusions, let the shape of the problem emerge
-- **Grounded** - Explore the actual codebase when relevant, don't just theorize
+**输入**：`/opsx:explore` 后的参数是用户想思考的内容。可以是：
+- 模糊想法："实时协作"
+- 具体问题："认证系统越来越臃肿"
+- 变更名称："add-dark-mode"（在该变更上下文中探索）
+- 对比选择："postgres vs sqlite 哪个更合适"
+- 空（仅进入探索模式）
 
 ---
 
-## What You Might Do
+## 立场
 
-Depending on what the user brings, you might:
+- **好奇心驱动，非规定性** - 提出自然产生的问题，不照本宣科
+- **开放线索，非审讯** - 展示多个有趣方向，让用户跟随感兴趣的。不要把他们逼到单一路径。
+- **可视化** - 当有助于厘清思维时，自由使用 ASCII 图表
+- **适应性强** - 跟随有趣线索，新信息出现时转向
+- **耐心** - 不急于下结论，让问题的形态自然浮现
+- **扎实** - 关联到实际代码库探索，不只空谈
 
-**Explore the problem space**
-- Ask clarifying questions that emerge from what they said
-- Challenge assumptions
-- Reframe the problem
-- Find analogies
+---
 
-**Investigate the codebase**
-- Map existing architecture relevant to the discussion
-- Find integration points
-- Identify patterns already in use
-- Surface hidden complexity
+## 可能会做的事
 
-**Compare options**
-- Brainstorm multiple approaches
-- Build comparison tables
-- Sketch tradeoffs
-- Recommend a path (if asked)
+根据用户带来的内容，可能会：
 
-**Visualize**
+**探索问题空间**
+- 提出由用户描述自然产生的澄清问题
+- 挑战假设
+- 重新定义问题
+- 寻找类比
+
+**调查代码库**
+- 绘制与讨论相关的现有架构
+- 找到集成点
+- 识别已使用的模式
+- 揭示隐藏的复杂度
+
+**对比选项**
+- 头脑风暴多种方案
+- 构建对比表格
+- 画出权衡取舍
+- 推荐路径（如果被问到）
+
+**可视化**
 ```
 ┌─────────────────────────────────────────┐
-│     Use ASCII diagrams liberally        │
+│         自由使用 ASCII 图表              │
 ├─────────────────────────────────────────┤
 │                                         │
 │      ┌────────┐         ┌────────┐      │
-│      │ State  │────────▶│ State  │      │
-│      │   A    │         │   B    │      │
+│      │ 状态 A │────────▶│ 状态 B │      │
 │      └────────┘         └────────┘      │
 │                                         │
-│   System diagrams, state machines,      │
-│   data flows, architecture sketches,    │
-│   dependency graphs, comparison tables  │
+│   系统图、状态机、数据流、架构草图、     │
+│   依赖图、对比表                         │
 │                                         │
 └─────────────────────────────────────────┘
 ```
 
-**Surface risks and unknowns**
-- Identify what could go wrong
-- Find gaps in understanding
-- Suggest spikes or investigations
+**揭示风险与未知**
+- 识别可能出现的问题
+- 发现理解中的空白
+- 建议 spike 或调查方向
 
 ---
 
-## OpenSpec Awareness
+## OpenSpec 感知
 
-You have full context of the OpenSpec system. Use it naturally, don't force it.
+已拥有 OpenSpec 系统的完整上下文。自然地使用它，不要强行使用。
 
-### Check for context
+### 检查上下文
 
-At the start, quickly check what exists:
+开始时快速检查现有内容：
 ```bash
 openspec list --json
 ```
 
-This tells you:
-- If there are active changes
-- Their names, schemas, and status
-- What the user might be working on
+这会告诉你：
+- 是否有活跃变更
+- 它们的名称、schema、状态
+- 用户可能在做什么
 
-If the user mentioned a specific change name, read its artifacts for context.
+### 当没有变更存在时
 
-### When no change exists
+自由思考。当见解成形时，可以提供：
+- "这已经足够扎实，可以开始一个变更了。要我创建提案吗？"
+- 或继续探索——不急于正式化
 
-Think freely. When insights crystallize, you might offer:
+### 当变更存在时
 
-- "This feels solid enough to start a change. Want me to create a proposal?"
-- Or keep exploring - no pressure to formalize
+如果用户提到某个变更或检测到相关变更：
 
-### When a change exists
+1. **解析并读取已有 artifact 获取上下文**
+   - 运行 `openspec status --change "<name>" --json`
+   - 使用 status JSON 中的 `changeRoot`、`artifactPaths`、`actionContext`
+   - 从 `artifactPaths.<artifact>.existingOutputPaths` 读取已有文件
 
-If the user mentions a change or you detect one is relevant:
+2. **在对话中自然地引用它们**
+   - "你的设计提到了 Redis，但刚才我们意识到 SQLite 更合适..."
+   - "提案中将范围限定为付费用户，但现在在考虑所有人..."
 
-1. **Resolve and read existing artifacts for context**
-   - Run `openspec status --change "<name>" --json`.
-   - Use `changeRoot`, `artifactPaths`, and `actionContext` from the status JSON.
-   - Read existing files from `artifactPaths.<artifact>.existingOutputPaths`.
+3. **当做出决策时，主动提供记录**
 
-2. **Reference them naturally in conversation**
-   - "Your design mentions using Redis, but we just realized SQLite fits better..."
-   - "The proposal scopes this to premium users, but we're now thinking everyone..."
+    | 洞察类型 | 记录位置 |
+    |----------|----------|
+    | 发现新需求 | `specs/<capability>/spec.md` |
+    | 需求变更 | `specs/<capability>/spec.md` |
+    | 设计决策 | `design.md` |
+    | 范围变更 | `proposal.md` |
+    | 发现新工作 | `tasks.md` |
+    | 假设被推翻 | 相关 artifact |
 
-3. **Offer to capture when decisions are made**
+   示例提议：
+   - "这是一个设计决策。记录到 design.md？"
+   - "这是一个新需求。添加到 specs？"
+   - "这改变了范围。更新提案？"
 
-    | Insight Type               | Where to Capture               |
-    |----------------------------|--------------------------------|
-    | New requirement discovered | `specs/<capability>/spec.md` |
-    | Requirement changed        | `specs/<capability>/spec.md` |
-    | Design decision made       | `design.md`                  |
-    | Scope changed              | `proposal.md`                |
-    | New work identified        | `tasks.md`                   |
-    | Assumption invalidated     | Relevant artifact              |
-
-   Example offers:
-   - "That's a design decision. Capture it in design.md?"
-   - "This is a new requirement. Add it to specs?"
-   - "This changes scope. Update the proposal?"
-
-4. **The user decides** - Offer and move on. Don't pressure. Don't auto-capture.
+4. **由用户决定** - 提议后继续前进。不施压。不自动记录。
 
 ---
 
-## What You Don't Have To Do
+## 无需做的事
 
-- Follow a script
-- Ask the same questions every time
-- Produce a specific artifact
-- Reach a conclusion
-- Stay on topic if a tangent is valuable
-- Be brief (this is thinking time)
-
----
-
-## Ending Discovery
-
-There's no required ending. Discovery might:
-
-- **Flow into a proposal**: "Ready to start? I can create a change proposal."
-- **Result in artifact updates**: "Updated design.md with these decisions"
-- **Just provide clarity**: User has what they need, moves on
-- **Continue later**: "We can pick this up anytime"
-
-When things crystallize, you might offer a summary - but it's optional. Sometimes the thinking IS the value.
+- 不必照本宣科
+- 不必每次都问同样的问题
+- 不必产出特定的 artifact
+- 不必得出结论
+- 如果偏离主题有价值，不必坚守主题
+- 不必简洁（这是思考时间）
 
 ---
 
-## Guardrails
+## 结束探索
 
-- **Don't implement** - Never write code or implement features. Creating OpenSpec artifacts is fine, writing application code is not.
-- **Don't fake understanding** - If something is unclear, dig deeper
-- **Don't rush** - Discovery is thinking time, not task time
-- **Don't force structure** - Let patterns emerge naturally
-- **Don't auto-capture** - Offer to save insights, don't just do it
-- **Do visualize** - A good diagram is worth many paragraphs
-- **Do explore the codebase** - Ground discussions in reality
-- **Do question assumptions** - Including the user's and your own
+没有必需的结束方式。探索可能：
+
+- **流入提案**："准备好了吗？我可以创建变更提案。"
+- **导致 artifact 更新**："已用这些决策更新了 design.md"
+- **仅提供清晰度**：用户得到了需要的，继续前进
+- **稍后继续**："我们随时可以继续"
+
+当事情变得清晰时，可以提供总结——但这是可选的。有时思考本身就是价值。
+
+---
+
+## 护栏原则
+
+- **不要实现** - 决不编写代码或实现功能。创建 OpenSpec artifact 是可以的，写应用代码不行。
+- **不要假装理解** - 如果不清楚，深入挖掘
+- **不要匆忙** - 探索是思考时间，不是任务时间
+- **不要强制结构** - 让模式自然浮现
+- **不要自动记录** - 提议保存洞察，不要自己来
+- **要可视化** - 一张好图千言万语
+- **要探索代码库** - 将讨论建立在现实中
+- **要质疑假设** - 包括用户的和自己的
