@@ -104,7 +104,7 @@ explore → propose → apply → verify → archive
 | ① 探索 | `/opsx:explore` | 可选 | 思考讨论、调查问题、对比技术方案 | 无文件 |
 | ② 提案 | `/opsx:propose` | **必须** | 创建变更目录，编写提案与任务拆解 | `proposal.md` / `design.md` / `tasks.md` |
 | ③ 实施 | `/opsx:apply` | **必须** | 按 tasks.md 逐项编码实现，标记完成状态 | 代码变更 |
-| ④ 验证 | `/opsx:verify` | 推荐 | 编译检查、类型检查、Spec 验收 | `verify.md` |
+| ④ 验证 | `/opsx:verify` | 推荐 `*` | 编译检查、类型检查、Spec 验收 | `verify.md` |
 | ⑤ 同步 | `/opsx:sync` | 可选 | 将 delta spec 合并到主 spec | 主 spec 更新 |
 | ⑥ 归档 | `/opsx:archive` | **必须** | 变更移入 `archive/`，完成闭环 | 归档目录 |
 
@@ -142,6 +142,8 @@ openspec/
     └── archive/            # 已归档变更
         └── 2026-06-21-add-user-auth/
 ```
+
+> `*` `verify` 为项目自定义步骤（非 OpenSpec 官方），在 apply 和 archive 之间增加编译检查与 Spec 验收。
 
 ---
 
