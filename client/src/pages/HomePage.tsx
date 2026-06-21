@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import HeroSection from '@/components/home/HeroSection'
 import StatsDashboard from '@/components/home/StatsDashboard'
 import PostList from '@/components/home/PostList'
+import { useAuthStore } from '@/stores/authStore'
 import { useUser } from '@/hooks/useUser'
 
 const containerVariants = {
@@ -13,7 +14,16 @@ const containerVariants = {
 }
 
 export default function HomePage() {
-  const { data: user, isLoading: userLoading } = useUser()
+  const authUser = useAuthStore((s) => s.user)
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const { data: defaultUser, isLoading: userLoading } = useUser()
+
+  // 优先用登录用户，否则用 API 首个用户
+  const displayUser = isLoggedIn && authUser
+    ? { ...authUser, bio: null, location: null, createdAt: '', _count: { posts: 0, comments: 0 } }
+    : defaultUser
+
+  const isLoading = isLoggedIn ? false : userLoading
 
   return (
     <motion.div
@@ -22,23 +32,20 @@ export default function HomePage() {
       animate="visible"
       className="max-w-4xl mx-auto space-y-8"
     >
-      {/* Hero 区 — 真实用户信息 */}
       <HeroSection
-        username={user?.username}
-        bio={user?.bio ?? undefined}
-        location={user?.location ?? undefined}
-        createdAt={user?.createdAt}
-        isLoading={userLoading}
+        username={displayUser?.username}
+        bio={displayUser?.bio ?? undefined}
+        location={displayUser?.location ?? undefined}
+        createdAt={displayUser?.createdAt}
+        isLoading={isLoading && !displayUser}
       />
 
-      {/* 统计面板 — 真实数据 */}
       <StatsDashboard
-        posts={user?._count.posts}
-        comments={user?._count.comments}
-        isLoading={userLoading}
+        posts={displayUser?._count?.posts}
+        comments={displayUser?._count?.comments}
+        isLoading={isLoading && !displayUser}
       />
 
-      {/* 文章列表 — 搜索+分页 */}
       <PostList />
     </motion.div>
   )

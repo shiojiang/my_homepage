@@ -18,7 +18,14 @@ description: >
 - 确认是前端、后端还是全栈任务
 - 对照 `README.md` 中的 🎯 复杂度递进路线，判断属于 P0~P4 哪个阶段
 
-### 2. 编码规范
+### 2. OpenSpec 流程（必须遵循）
+- **propose → design → specs → tasks 编写完成后，暂停并等待用户确认，确认后再进入 apply 实施**
+- propose 用 `openspec new change "<name>"` 创建变更目录
+- 按依赖顺序创建 artifact：proposal → specs → design → tasks
+- 创建完 tasks.md 后，展示摘要给用户审核，问"确认开始实施？"
+- apply 实施完成 → verify 验证 → archive 归档
+
+### 3. 编码规范
 
 **前端 (client/)**
 - 组件放在 `client/src/components/`，页面放在 `client/src/pages/`
