@@ -153,11 +153,19 @@ openspec/
 |------|------|--------|------|
 | **P0** 基础 | 个人主页展示、个人信息编辑、社交链接 | 静态页面 → 响应式布局 → API 对接 | ✅ 已完成 |
 | **P1** 动态 | 博客/动态列表、分类筛选、搜索、分页 | RESTful API → 数据库 CRUD → TanStack Query 缓存 | ✅ 已完成 |
-| **P2** 用户 | 注册/登录、个人中心、权限控制、评论互动 | JWT 认证 → bcrypt 加密 → Guard 守卫 → 关联查询 | ⬜ 待开始 |
+| **P2** 用户 | 注册/登录、个人中心、权限控制、评论互动 | JWT 认证 → bcrypt 加密 → Guard 守卫 → 关联查询 | ✅ 已完成 |
 | **P3** 进阶 | 文件上传、点赞收藏、消息通知、数据统计 | Multer 上传 → WebSocket 实时通知 → 事务操作 | ⬜ 待开始 |
 | **P4** 高阶 | 数据看板、深色/浅色主题切换、i18n 国际化 | ECharts 图表 → Zustand 持久化 → i18next 多语言 | ⬜ 待开始 |
 
 ### 最近更新 (2026-06-21)
+
+**P2 用户认证**
+- 新增 LoginPage / RegisterPage（注册成功浮层提示）
+- 新增 authStore（Zustand persist Token + 用户状态）
+- 新增 PrivateRoute 路由守卫（未登录→/login）
+- 新增 SettingsPage 个人资料编辑
+- Header 登录态切换（登录按钮 / 头像+下拉菜单退出）
+- Axios 401 拦截器排除 /auth/ 路径
 
 **P1 动态列表与详情**
 - 新增 CategoryFilter 分类标签切换（全部/技术/生活/综合）
