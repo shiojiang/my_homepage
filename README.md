@@ -31,7 +31,6 @@
 
 - Node.js >= 18
 - pnpm >= 8
-- Docker & Docker Compose (用于数据库)
 
 ### 安装依赖
 
@@ -39,32 +38,26 @@
 pnpm install
 ```
 
-### 启动数据库
+### 初始化数据库（SQLite，零依赖）
 
 ```bash
-docker-compose up -d postgres
-```
-
-### 初始化数据库
-
-```bash
-pnpm db:push
+pnpm db:push                          # 建表
+pnpm --filter server run db:seed      # 写入种子数据（用户 admin/123 + 示例文章）
 ```
 
 ### 启动开发环境
 
 ```bash
-# 同时启动前后端
-pnpm dev
+# 终端 1：后端 http://localhost:3001
+cd server && npx nest start
 
-# 或分别启动
-pnpm dev:client   # 前端 http://localhost:5173
-pnpm dev:server   # 后端 http://localhost:3000
+# 终端 2：前端 http://localhost:5173
+cd client && npx vite --host
 ```
 
 ### API 文档
 
-后端启动后访问: http://localhost:3000/api/docs
+后端启动后访问: http://localhost:3001/api/docs
 
 ## 📁 项目结构
 
